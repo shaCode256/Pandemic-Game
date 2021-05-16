@@ -6,7 +6,7 @@ namespace pandemic
     class FieldDoctor : public Player
     {
     public:
-        FieldDoctor &build();
+        FieldDoctor &treat(City cityTo);
         FieldDoctor (Board &board, City city) : Player(board, city)
         {
         }

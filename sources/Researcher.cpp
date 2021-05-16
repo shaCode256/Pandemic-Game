@@ -1,5 +1,5 @@
 #include "Researcher.hpp"
-#define numCardsToFindCure 5
+const int numCardsToFindCure= 5;
 using namespace pandemic;
 
 Researcher &Researcher::discover_cure(Color color) {

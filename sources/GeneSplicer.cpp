@@ -2,7 +2,8 @@
 
 using namespace pandemic;
 
-#define numCardsToFindCure 5
+const int numCardsToFindCure =5;
+
 GeneSplicer &GeneSplicer::discover_cure(Color Color) {
      //if there was already a cure found to this desease (color)
     if (gameBoard.citiesMap[currentCity].cure_found)
