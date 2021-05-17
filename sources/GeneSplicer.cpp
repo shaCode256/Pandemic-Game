@@ -24,7 +24,6 @@ GeneSplicer &GeneSplicer::discover_cure(Color Color)
             std::map<City, int>::iterator endIter = cards.end();
             for (; iter != endIter; ++iter)
             {
-                City name = iter->first;
                 numCards++;
             }
             //if there are at least 5 cards (NOT only of this color)

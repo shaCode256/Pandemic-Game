@@ -59,11 +59,12 @@ namespace pandemic
     {
         std::map<City, CityClass>::iterator iter = board.citiesMap.begin();
         std::map<City, CityClass>::iterator endIter = board.citiesMap.end();
+        std::string boardDesc;
         for (; iter != endIter; ++iter)
         {  
             CityClass value = iter->second;
-            outStream << "cityName: " << value.name << ", Desease level is: " << value.diseaseLevel << " ";
+            boardDesc+= "cityName: "+ value.name+ ", Desease level is: " +std::to_string(value.diseaseLevel) +", ";
         }
-        return outStream;
+        return std::operator<<(outStream, boardDesc);
     }
 };

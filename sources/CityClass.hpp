@@ -12,14 +12,14 @@ namespace pandemic
     class CityClass
     {
     public:
-        City name;
+        std::string name;
         int diseaseLevel;
         Color color;
         bool cure_found;
         bool research_lab_exist;
         CityClass(){}; 
 
-    CityClass(City name_, Color color_){
+    CityClass(std::string name_, Color color_){
         diseaseLevel=0;
         cure_found=false;
         research_lab_exist=false;

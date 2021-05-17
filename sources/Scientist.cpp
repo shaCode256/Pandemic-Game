@@ -10,6 +10,7 @@ Scientist &Scientist::discover_cure(Color color) {
  //if there was already a cure found to this desease (color)
     if (gameBoard.citiesMap[currentCity].cure_found)
     {
+        //no need to throw exception();
     }
     else
     {
@@ -46,11 +47,11 @@ Scientist &Scientist::discover_cure(Color color) {
                 }
                 }
                 gameBoard.cures_found[gameBoard.citiesMap[currentCity].color] = true; //you found the cure!
-            }
-            else
-            {
-                throw std::invalid_argument("Scientist discover_cure error: You don't have enough cards of this city");
-            }
         }
+        else
+        {
+                throw std::invalid_argument("Scientist discover_cure error: You don't have enough cards of this city");
+        }
+    }
     return *this;
 }

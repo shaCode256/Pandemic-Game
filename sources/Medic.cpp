@@ -11,13 +11,14 @@ Medic &Medic::treat(City cityTo)
 {
     if (cityTo == currentCity)
     {
-        if (gameBoard.citiesMap[currentCity].diseaseLevel == 0)
+        if (gameBoard.citiesMap[currentCity].diseaseLevel != 0)
         {
-            throw std::invalid_argument("Medic treat error: This city is already cured.");
+            gameBoard.citiesMap[currentCity].diseaseLevel = 0;
         }
         else
         {
-            gameBoard.citiesMap[currentCity].diseaseLevel = 0;
+            throw std::invalid_argument("Medic treat error: This city is already cured.");
+
         }
     }
     else
