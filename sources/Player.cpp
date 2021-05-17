@@ -24,8 +24,7 @@ Player &Player::build()
         }
         else
         {
-            throw std::invalid_argument("You don't have enough cards of this city");
-            ;
+            throw std::invalid_argument("build error: You don't have enough cards of this city");
         }
     }
     return *this;
@@ -58,29 +57,27 @@ Player &Player::discover_cure(Color color)
             if (numCards - numCardsToFindCure >= 0)
             {
                 int toDelete = numCardsToFindCure;
-                while (toDelete > 0)
+                std::map<City, int>::iterator iter = cards.begin();
+                std::map<City, int>::iterator endIter = cards.end();
+                while (iter != endIter && toDelete>0)
                 {
-                    std::map<City, int>::iterator iter = cards.begin();
-                    std::map<City, int>::iterator endIter = cards.end();
-                    for (; iter != endIter; ++iter)
-                    {
                         City name = iter->first;
                         if (gameBoard.citiesMap[name].color == color)
                         {
                             iter->second = 0; //amount
                             toDelete--;
                         }
-                    }
+                iter++;
                 }
                 gameBoard.cures_found[gameBoard.citiesMap[currentCity].color] = true; //you found the cure!
             }
             else
             {
-                throw std::invalid_argument("You don't have enough cards of this city");
+                throw std::invalid_argument("discover_cure error: You don't have enough cards of this city");
             }
         }
         else{
-            throw std::invalid_argument("There's no lab in this city");   
+            throw std::invalid_argument("discover_cure error: There's no lab in this city");   
         }
     }
     return *this;
@@ -108,12 +105,15 @@ Player &Player::fly_charter(City cityTo)
 {
     if (cityTo == currentCity)
     {
-        throw std::invalid_argument("you can't fly to where you're already at");
+        throw std::invalid_argument("you can't fly_charter to where you're already at");
     }
     if (cards[currentCity] == 1)
     {
         cards[currentCity] = 0;
         currentCity = cityTo;
+    }
+    else{
+        throw std::invalid_argument("you can't fly_charter to a city you don't hold its card");
     }
     return *this;
 }
@@ -122,7 +122,7 @@ Player &Player::fly_direct(City cityTo)
 {
     if (cityTo == currentCity)
     {
-        throw std::invalid_argument("you can't fly to where you're already at");
+        throw std::invalid_argument("you can't fly_direct to where you're already at");
     }
     if (cards[cityTo] == 1)
     {
@@ -130,7 +130,7 @@ Player &Player::fly_direct(City cityTo)
         currentCity = cityTo;
     }
     else{
-        throw std::invalid_argument("you can't fly to a city you don't hold its card");
+        throw std::invalid_argument("you can't fly_direct to a city you don't hold its card");
     }
     return *this;
 }
@@ -139,7 +139,7 @@ Player &Player::fly_shuttle(City cityTo)
 {
     if (cityTo == currentCity)
     {
-        throw std::invalid_argument("you can't fly to where you're already at");
+        throw std::invalid_argument("you can't fly_shuttle to where you're already at");
     }
     if (gameBoard.citiesMap[currentCity].research_lab_exist && gameBoard.citiesMap[cityTo].research_lab_exist)
     {
@@ -147,7 +147,7 @@ Player &Player::fly_shuttle(City cityTo)
     }
     else
     {
-        throw std::invalid_argument("you can't shuttle fly to this city. at least one of the cities (yours and the desired one) doesn't have a lab");
+        throw std::invalid_argument("you can't fly_shuttle to this city. at least one of the cities (yours and the desired one) doesn't have a lab");
     }
     return *this;
 }
@@ -167,28 +167,19 @@ Player &Player::treat(City cityTo)
 {
     if (cityTo == currentCity)
     {
-        if (cards[cityTo] == 1)
-        {
             if (gameBoard.citiesMap[currentCity].diseaseLevel == 0)
             {
-                throw std::invalid_argument("This city is already cured.");
+                throw std::invalid_argument("treat error:This city is already cured.");
             }
 
             if (gameBoard.cures_found[gameBoard.citiesMap[currentCity].color])
             {
-                cards[cityTo] = 0;
                 gameBoard.citiesMap[currentCity].diseaseLevel = 0;
             }
             else
             {
-                cards[cityTo] = 0;
                 gameBoard.citiesMap[currentCity].diseaseLevel = gameBoard.citiesMap[currentCity].diseaseLevel - 1;
             }
-        }
-        else
-        {
-            throw std::invalid_argument("you have no card of this city");
-        }
     }
     else
     {

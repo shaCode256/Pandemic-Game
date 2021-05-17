@@ -11,12 +11,15 @@ namespace pandemic
 {
     class Player
     {
-    private:
-    public:
+    protected:
         Board gameBoard;
         std::map<City, int> cards;
         City currentCity;
-        Player(Board board, City city){};
+    public:
+        Player(Board& board, City city){
+            currentCity= city;
+            gameBoard= board;
+        };
         ~Player() = default; //destructor
 
         void remove_cures();

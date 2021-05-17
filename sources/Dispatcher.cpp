@@ -2,12 +2,27 @@
 
 using namespace pandemic;
 
-Dispatcher &Dispatcher::fly_direct(City cityTo) {
-    if(gameBoard.citiesMap[currentCity].research_lab_exist){
-    currentCity=cityTo;
+// קצין תעבורה - Dispatcher: כשהוא נמצא בתחנת-מחקר,
+// הוא יכול לבצע פעולת "טיסה ישירה" לכל עיר שהוא רוצה,
+//  ללא השלכת קלף-עיר.
+
+Dispatcher &Dispatcher::fly_direct(City cityTo)
+{
+    if (gameBoard.citiesMap[currentCity].research_lab_exist)
+    {
+        currentCity = cityTo;
     }
-    else{
-        throw std::invalid_argument("you don't have a research lab in this city");
+    else
+    {
+        if (cards[cityTo] == 1)
+        {
+            cards[cityTo] = 0;
+            currentCity = cityTo;
+        }
+        else
+        {
+            throw std::invalid_argument("Dispatcher fly_direct error: you don't have a research lab in this city AND you have no card");
+        }
     }
     return *this;
 }

@@ -11,23 +11,58 @@ using namespace pandemic;
 
 namespace pandemic
 {
-    int &Board::operator[](pandemic::City city)
+    int& Board::operator[](pandemic::City city)
     { //toCheck
-        return citiesMap[city].diseaseLevel;
+        return Board::citiesMap[city].diseaseLevel;
     }
 
     // void &Board::operator[](pandemic::City city, int num) {
     //     citiesMap[city].diseaseLevel= num;
     // }
 
+    bool Board::is_clean()
+    {
+        std::map<City, CityClass>::iterator iter = Board::citiesMap.begin();
+        std::map<City, CityClass>::iterator endIter = Board::citiesMap.end();
+        for (; iter != endIter; ++iter)
+        {
+            CityClass city = iter->second;
+            if (city.diseaseLevel != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void Board::remove_cures()
+    {
+        std::map<Color, bool>::iterator iter = Board::cures_found.begin();
+        std::map<Color, bool>::iterator endIter = Board::cures_found.end();
+        for (; iter != endIter; ++iter)
+        {
+            iter->second = false;
+        }
+    }
+
+    void Board::remove_stations()
+    {
+        std::map<City, CityClass>::iterator iter = Board::citiesMap.begin();
+        std::map<City, CityClass>::iterator endIter = Board::citiesMap.end();
+        for (; iter != endIter; ++iter)
+        {
+            iter->second.research_lab_exist = false;
+        }
+    }
+
     std::ostream &operator<<(std::ostream &outStream, Board &board)
     {
         std::map<City, CityClass>::iterator iter = board.citiesMap.begin();
         std::map<City, CityClass>::iterator endIter = board.citiesMap.end();
         for (; iter != endIter; ++iter)
-        {
-            City key = iter->first;
+        {  
             CityClass value = iter->second;
+            outStream << "cityName: " << value.name << ", Desease level is: " << value.diseaseLevel << " ";
         }
         return outStream;
     }
