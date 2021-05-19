@@ -8,6 +8,9 @@ using namespace pandemic;
 
 Dispatcher &Dispatcher::fly_direct(City cityTo)
 {
+    if (cityTo == currentCity){
+        throw std::invalid_argument("Dispatcher fly_direct error: can't fly from city to itself");
+    }
     if (gameBoard.citiesMap[currentCity].research_lab_exist)
     {
         currentCity = cityTo;

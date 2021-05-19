@@ -11,7 +11,7 @@ namespace pandemic
         Scientist &discover_cure(Color color);
         Scientist (Board &board, City city, int numCardsToCure) : Player(board, city)
         {
-            CardsToCure= numCardsToCure;
+            Player::gameBoard.scientist_num_cards_discover_cure= numCardsToCure;
         }
         std::string role()
         {

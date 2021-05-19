@@ -7,7 +7,7 @@ namespace pandemic
     {
     public:
         FieldDoctor &treat(City cityTo);
-        FieldDoctor (Board &board, City city) : Player(board, city)
+        FieldDoctor (Board& board, City city) : Player(board, city)
         {
         }
         std::string role()

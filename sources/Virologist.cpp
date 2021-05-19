@@ -10,20 +10,17 @@ Virologist &Virologist::treat(City cityTo)
     }
     if (cityTo == currentCity || cards[cityTo] > 0)
     {
-        if (cityTo == currentCity)
+        if (cityTo != currentCity)
         {
-            if (gameBoard.citiesMap[cityTo].cure_found)
-            {
-                gameBoard.citiesMap[cityTo].diseaseLevel = 0;
-            }
-            else
-            {
-                gameBoard.citiesMap[cityTo].diseaseLevel -= 1;
-            }
+            cards[cityTo] = 0;
+        }
+        if (gameBoard.citiesMap[cityTo].cure_found)
+        {
+            gameBoard.citiesMap[cityTo].diseaseLevel = 0;
         }
         else
         {
-            cards[cityTo] = 0;
+            gameBoard.citiesMap[cityTo].diseaseLevel -= 1;
         }
     }
     else

@@ -20,11 +20,14 @@ GeneSplicer &GeneSplicer::discover_cure(Color Color)
         {
             int numCards = 0;
             //counting how many cards there are to this player in this color
-            std::map<City, int>::iterator iter = cards.begin();
-            std::map<City, int>::iterator endIter = cards.end();
+            std::map<City, int>::iterator iter = Player::cards.begin();
+            std::map<City, int>::iterator endIter = Player::cards.end();
             for (; iter != endIter; ++iter)
             {
-                numCards++;
+                if (iter->second == 1)
+                {
+                    numCards++;
+                }
             }
             //if there are at least 5 cards (NOT only of this color)
             if (numCards - numCardsToFindCure >= 0)
@@ -32,8 +35,11 @@ GeneSplicer &GeneSplicer::discover_cure(Color Color)
                 int toDelete = numCardsToFindCure;
                 while (iter != endIter && toDelete > 0)
                 {
-                    iter->second = 0; //amount of cards
-                    toDelete--;
+                    if (iter->second == 1)
+                    {
+                        iter->second = 0; //amount of cards
+                        toDelete--;
+                    }
                     iter++;
                 }
                 gameBoard.citiesMap[currentCity].diseaseLevel = 0; //cure the desease!
@@ -42,6 +48,10 @@ GeneSplicer &GeneSplicer::discover_cure(Color Color)
             {
                 throw std::invalid_argument("GeneSplicer discover_cure error: You don't have enough city cards");
             }
+        }
+        else
+        {
+            throw std::invalid_argument("GeneSplicer discover_cure error: There's no lab");
         }
     }
     return *this;

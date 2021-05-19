@@ -4,7 +4,7 @@
 #include "Board.hpp"
 #include <stdexcept>
 const int numCardsToFindCure= 5;
-//#define ENUM_TO_STR(ENUM) std::string(#ENUM)
+
 //implements the actions a player can do in this pandemic game.
 
 using namespace pandemic;
@@ -48,7 +48,7 @@ Player &Player::discover_cure(Color color)
             for (; iter != endIter; ++iter)
             {
                 City name = iter->first;
-                if (gameBoard.citiesMap[name].color == color)
+                if (gameBoard.citiesMap[name].color == color && iter->second==1)
                 {
                     numCards++;
                 }
@@ -62,7 +62,7 @@ Player &Player::discover_cure(Color color)
                 while (iter != endIter && toDelete>0)
                 {
                         City name = iter->first;
-                        if (gameBoard.citiesMap[name].color == color)
+                        if (gameBoard.citiesMap[name].color == color&& iter->second==1)
                         {
                             iter->second = 0; //amount
                             toDelete--;
@@ -85,7 +85,6 @@ Player &Player::discover_cure(Color color)
 
 Player &Player::drive(City cityTo)
 {
-    // std::string cityString = ENUM_TO_STR(cityTo);
     if (cityTo == currentCity)
     {
         throw std::invalid_argument("you can't drive to where you're already at");
@@ -159,7 +158,7 @@ std::string Player::role()
 
 Player &Player::take_card(City city)
 {
-    cards[city] = 1;
+    Player::cards[city] = 1;
     return *this;
 }
 
