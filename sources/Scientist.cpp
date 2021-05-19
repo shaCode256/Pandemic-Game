@@ -29,6 +29,9 @@ Scientist &Scientist::discover_cure(Color color)
                 {
                     numCards++;
                 }
+                if(numCards== gameBoard.scientist_num_cards_discover_cure){
+                    break;
+                }
             }
             //if there are at least n cards of this color
             if (numCards - gameBoard.scientist_num_cards_discover_cure >= 0)

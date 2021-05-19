@@ -33,7 +33,7 @@ Player &Player::build()
 Player &Player::discover_cure(Color color)
 {
     //if there was already a cure found to this desease (color)
-    if (gameBoard.cures_found[gameBoard.citiesMap[currentCity].color])
+    if (gameBoard.cures_found[color])
     {
         //no need to throw exception();
     }
@@ -52,6 +52,9 @@ Player &Player::discover_cure(Color color)
                 {
                     numCards++;
                 }
+                if(numCards== numCardsToFindCure){
+                    break;
+                }
             }
             //if there are at least 5 cards of this color
             if (numCards - numCardsToFindCure >= 0)
@@ -69,7 +72,7 @@ Player &Player::discover_cure(Color color)
                         }
                 iter++;
                 }
-                gameBoard.cures_found[gameBoard.citiesMap[currentCity].color] = true; //you found the cure!
+                gameBoard.cures_found[color] = true; //you found the cure!
             }
             else
             {

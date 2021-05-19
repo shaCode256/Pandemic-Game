@@ -28,6 +28,9 @@ Researcher &Researcher::discover_cure(Color color)
                 {
                     numCards++;
                 }
+                if(numCards== numCardsToFindCure){
+                    break;
+                }
             }
         }
         //if there are at least 5 cards of this color

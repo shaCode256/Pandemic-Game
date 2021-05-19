@@ -8,11 +8,12 @@ const int numCardsToFindCure = 5;
 //  בעזרת 5 קלפים כלשהם -
 //  לא דווקא מהצבע של המחלה.
 
-GeneSplicer &GeneSplicer::discover_cure(Color Color)
+GeneSplicer &GeneSplicer::discover_cure(Color color)
 {
     //if there was already a cure found to this desease (color)
-    if (gameBoard.citiesMap[currentCity].cure_found)
+    if (gameBoard.cures_found[color])
     {
+        //no need to throw exception();
     }
     else
     {
@@ -28,8 +29,13 @@ GeneSplicer &GeneSplicer::discover_cure(Color Color)
                 {
                     numCards++;
                 }
+                if(numCards==numCardsToFindCure){
+                    break;
+                }
             }
             //if there are at least 5 cards (NOT only of this color)
+            iter = Player::cards.begin();
+            endIter = Player::cards.end();
             if (numCards - numCardsToFindCure >= 0)
             {
                 int toDelete = numCardsToFindCure;
@@ -42,7 +48,7 @@ GeneSplicer &GeneSplicer::discover_cure(Color Color)
                     }
                     iter++;
                 }
-                gameBoard.citiesMap[currentCity].diseaseLevel = 0; //cure the desease!
+                gameBoard.cures_found[color]=true; //Find the cure!
             }
             else
             {
